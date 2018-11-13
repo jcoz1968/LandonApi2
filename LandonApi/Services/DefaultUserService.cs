@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace LandonApi.Services
@@ -67,6 +68,22 @@ namespace LandonApi.Services
                 Items = items,
                 TotalSize = size
             };
+        }
+
+        public async Task<User> GetUserAsync(ClaimsPrincipal user)
+        {
+            var entity = await _userManager.GetUserAsync(user);
+            var mapper = _mappingConfiguration.CreateMapper();
+
+            return mapper.Map<User>(entity);
+        }
+
+        public async Task<Guid?> GetUserIdAsync(ClaimsPrincipal principal)
+        {
+            var user = await _userManager.GetUserAsync(principal);
+            if (user == null) return null;
+
+            return user.Id;
         }
     }
 }

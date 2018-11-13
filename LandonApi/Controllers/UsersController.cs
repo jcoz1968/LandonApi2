@@ -68,7 +68,7 @@ namespace LandonApi.Controllers
             var (succeded, message) = await _userService.CreateUserAsync(registerForm);
             if(succeded)
             {
-                return Created("todo", null);
+                return Created(Url.Link(nameof(UserinfoController.Userinfo), null), null);
             }
 
             return BadRequest(new ApiError
