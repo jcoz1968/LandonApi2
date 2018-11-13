@@ -46,6 +46,11 @@ namespace LandonApi.Infrastructure
                         nameof(Controllers.RoomsController.GetRoomById),
                         new { roomId = src.Id })));
 
+            CreateMap<UserEntity, User>()
+                .ForMember(dest => dest.Self, opt => opt.MapFrom(src =>
+                    Link.To(nameof(Controllers.UsersController.GetUserById), 
+                    new { userId = src.Id })));
+
         }
     }
 }
