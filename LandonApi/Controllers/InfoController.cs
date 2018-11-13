@@ -28,6 +28,11 @@ namespace LandonApi.Controllers
         {
             _hotelInfo.Href = Url.Link(nameof(GetInfo), null);
 
+            //if(Request.GetEtagHandler().NoneMatch(_hotelInfo))
+            //{
+
+            //}
+
             return _hotelInfo;
         }
     }
