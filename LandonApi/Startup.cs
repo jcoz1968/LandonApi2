@@ -19,6 +19,7 @@ using LandonApi.Services;
 using AutoMapper;
 using LandonApi.Infrastructure;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Identity;
 
 namespace LandonApi
 {
@@ -72,6 +73,9 @@ namespace LandonApi
 
                 });
 
+            //Add ASP.NET Core Identity
+            AddIdentityCoreServices(services);
+
             services
                 .AddRouting(options => options.LowercaseUrls = true);
 
@@ -121,6 +125,18 @@ namespace LandonApi
             }
             app.UseResponseCaching();
             app.UseMvc();
+        }
+
+        private static void AddIdentityCoreServices(IServiceCollection services)
+        {
+            var builder = services.AddIdentityCore<UserEntity>();
+            builder = new IdentityBuilder(builder.UserType, typeof(UserRoleEntity), builder.Services);
+
+            builder.AddRoles<UserRoleEntity>()
+                .AddEntityFrameworkStores<HotelApiDbContext>()
+                .AddDefaultTokenProviders()
+                .AddSignInManager<UserEntity>();
+
         }
     }
 }
