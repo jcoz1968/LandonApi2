@@ -97,6 +97,8 @@ namespace LandonApi
                     return new BadRequestObjectResult(errorResponse);
                 };
             });
+
+            services.AddResponseCaching();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -117,7 +119,7 @@ namespace LandonApi
             {
                 app.UseHsts();
             }
-
+            app.UseResponseCaching();
             app.UseMvc();
         }
     }
