@@ -23,6 +23,28 @@ namespace LandonApi.Services
             _mappingConfiguration = mappingConfiguration;
         }
 
+        public async Task<(bool Succeded, string ErrorMessage)> CreateUserAsync(RegisterForm registerForm)
+        {
+            var entity = new UserEntity
+            {
+                Email = registerForm.Email,
+                UserName = registerForm.Email,
+                LastName = registerForm.LastName,
+                FirstName = registerForm.FirstName,
+                CreatedAt = DateTimeOffset.UtcNow
+            };
+
+            var result = await _userManager.CreateAsync(entity, registerForm.Password);
+
+            if(!result.Succeeded)
+            {
+                var firstError = result.Errors.FirstOrDefault()?.Description;
+                return (false, firstError);
+            }
+
+            return (true, null);
+        }
+
         public async Task<PagedResults<User>> GetUsersAsync(
             PagingOptions pagingOptions,
             SortOptions<User, UserEntity> sortOptions,

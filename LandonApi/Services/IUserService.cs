@@ -12,5 +12,7 @@ namespace LandonApi.Services
             PagingOptions pagingOptions,
             SortOptions<User, UserEntity> sortOptions,
             SearchOptions<User, UserEntity> searchOptions);
+
+        Task<(bool Succeded, string ErrorMessage)> CreateUserAsync(RegisterForm registerForm);
     }
 }
